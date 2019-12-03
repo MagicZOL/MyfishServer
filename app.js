@@ -4,8 +4,10 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+//라우터 파일에 있는 스크립트 등록
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var scoreRouter = require('./routes/score'); 
 
 var app = express();
 
@@ -19,9 +21,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//역할 부여, /score로 들어오면 scoreRouter가 처리하라
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-
+app.use('/score', scoreRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
