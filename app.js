@@ -9,29 +9,19 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var scoreRouter = require('./routes/score'); 
 
+var app = express();
 
 //Mogodb설정
 const MongoClient = require('mongodb').MongoClient;
-const assert = require('assert');
- 
-// Connection URL
-const url = 'mongodb://localhost:27017';
- 
-// Database Name
-const dbName = 'Myfish';
-
-var app = express();
- 
-// Use connect method to connect to the server
-MongoClient.connect(url, function(err, client) {
-  assert.equal(null, err);
-  console.log("Connected successfully to server");
- 
+const uri = "mongodb+srv://ZOLadmin:admin1234@cluster0-f0ard.mongodb.net/test?retryWrites=true&w=majority";
+const client = new MongoClient(uri, { useNewUrlParser: true });
+client.connect(err => {
+  //Database Name
+  const dbName = 'Myfish';
   const db = client.db(dbName);
   app.set("database", db); //app은 express의 객체로 웹서버를 제어하는 코어
   //뒤 명령어를 앞 이름으로 접근하게 만드는 코드
-  
- //client.close(); 
+  console.log("Connected successfully to server");
 });
 
 // view engine setup
